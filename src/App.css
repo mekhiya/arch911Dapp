@@ -24,6 +24,15 @@
   color: white;
 }
 
+
+.App-body {
+  background-color: #008080;  
+  color: yellow;  
+  padding: 40px;  
+  font-family: Arial;  
+  text-align: center;  
+}
+
 .App-link {
   color: #61dafb;
 }

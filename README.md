@@ -42,6 +42,8 @@ Anyone can create deposit.
 Arch911 is Custodian like vault that holds and protects your asset.
 You can keep deposit for as long as you want.
 
+deposit amount minimum 0.01 ETH
+
 Create Watch:
 
 Anyone can create watch on top of any deposits by paying 0.000911 ETH. 
@@ -119,10 +121,7 @@ github
 https://github.com/mekhiya/web3caller/tree/main/arch911
 
 Contract on Kovan
-https://kovan.etherscan.io/address/0x918257ad8490a7C183D4Cd0a9EfE021CD2D74aB8
-
-Contract on Polygon-test
-https://mumbai.polygonscan.com/address/0x71B8344C45704060D44834dCb327122aC6F206E7
+https://kovan.etherscan.io/address/0x5229477Ad95DE9C66bB5AB69887796653579d68e
 
 Front End (Incomplete - pending - not complete)
 https://web3caller-s4exm9.argoapp.io/
@@ -200,16 +199,12 @@ npx hardhat help
 ```
 
 ### Use alchemy to launch node
-Alchemy Ropsten
-BV1GBkzJWByRE0dpV5BrrInFNscKzQFS
-https://eth-ropsten.alchemyapi.io/v2/BV1GBkzJWByRE0dpV5BrrInFNscKzQFS
+Alchemy kovan
 
-Ropsten
+kovan
 Arch911Contract Contract deployed to: 
-0xe447a45FbE7bA416Ce0d7e77bcc05cc69BB7Dcda
+https://kovan.etherscan.io/address/0x5229477Ad95DE9C66bB5AB69887796653579d68e
 
-deployed on locahost
-Arch911Contract Contract deployed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
 
 ### `npm install npm install @openzepellin/contracts`
 

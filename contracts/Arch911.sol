@@ -22,7 +22,10 @@ contract Arch911Contract is Ownable {
     uint256 public totalVaultValue;
     uint256 public totalDepositValue;
     uint256 public numberOfWatch;
-    //0.00091 ETH watcher fees
+
+    //0.1 ETH
+    uint256 minDepositAmount = 100000000000000000;
+    //0.000911 ETH watcher fees
     //911000000000000 WEI
     uint256 public watchCreationFees = 911000000000000;
     //0.000091 Alert amount (1/10th of watchCreationFees)
@@ -69,7 +72,7 @@ contract Arch911Contract is Ownable {
         return (
             numOfDeposits,
             numOfUniqueDepositors,
-            totalDepositValue,
+            totalVaultValue,
             numberOfWatch
         );
     }
@@ -81,6 +84,13 @@ contract Arch911Contract is Ownable {
 
         uint256 _amount = msg.value;
         address _funderAddress = msg.sender;
+
+        //Minimum 0.1 ETH required to create deposit
+        //100000000000000000
+        require(
+            _amount >= minDepositAmount,
+            "0.01 ETH required to create Deposit"
+        );
 
         ownerOfDeposits[_funderAddress].push(
             Deposit(
@@ -107,8 +117,9 @@ contract Arch911Contract is Ownable {
         payable
     {
         //msg.value >= 911000000000000
+        uint256 _watchfees = msg.value;
         require(
-            msg.value >= watchCreationFees,
+            _watchfees >= watchCreationFees,
             "0.00091 ETH required to create Watch"
         );
 
@@ -122,7 +133,8 @@ contract Arch911Contract is Ownable {
             Watch(_depositorAddress, msg.sender, block.timestamp)
         );
         numberOfWatch = numberOfWatch + 1;
-        totalVaultValue = totalVaultValue + msg.value;
+        totalVaultValue += _watchfees;
+        //_watchfees
     }
 
     //INTERNAL Function - finds depositIndex - Result only for msg.Sender
@@ -202,8 +214,13 @@ contract Arch911Contract is Ownable {
         );
         uint256 _amountToTransfer = ownerOfDeposits[msg.sender][_depositIndex]
             .amount;
-        payable(msg.sender).transfer(_amountToTransfer);
 
+        address _depositor = ownerOfDeposits[msg.sender][_depositIndex]
+            .depositorAddress;
+
+        //payable(msg.sender).transfer(_amountToTransfer);
+        (bool success, ) = _depositor.call{value: _amountToTransfer}("");
+        require(success, "Failed to transfer the funds.");
         Deposit memory removeDeposit;
         removeDeposit = ownerOfDeposits[msg.sender][_depositIndex];
         ownerOfDeposits[msg.sender][_depositIndex] = ownerOfDeposits[
@@ -234,8 +251,14 @@ contract Arch911Contract is Ownable {
                     lastIndex
                 ].watcherAddress;
 
-                payable(_watcherAddress).transfer(watchCreationFees / 10);
-                if (_isFinalAlert) {
+                uint256 _alertAmount = watchCreationFees / 10;
+
+                //payable(_watcherAddress).transfer(watchCreationFees / 10);
+                (bool success, ) = _watcherAddress.call{value: _alertAmount}(
+                    ""
+                );
+                totalVaultValue -= _alertAmount;
+                if (success && _isFinalAlert) {
                     //we delete watch when alert sent during Withdraw method & not submitwithdraw method
                     depositToWatches[_depositId].pop();
                     numberOfWatch--;

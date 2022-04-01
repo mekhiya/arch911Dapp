@@ -4,7 +4,7 @@ require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 require('@openzeppelin/hardhat-upgrades');
 
-const { API_URL, PRIVATE_KEY } = process.env;
+const { API_URL_ROPSTEN, API_URL_KOVAN, PRIVATE_KEY } = process.env;
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -27,12 +27,17 @@ module.exports = {
   paths: {
     artifacts: './src/artifacts',
   },
+  defaultNetwork: "kovan",
   networks: {
     hardhat: {
       chainId: 1337
     },
     ropsten: {
-      url: API_URL,
+      url: API_URL_ROPSTEN,
+      accounts: [`0x${PRIVATE_KEY}`]
+    },
+    kovan: {
+      url: API_URL_KOVAN,
       accounts: [`0x${PRIVATE_KEY}`]
     },
   },
