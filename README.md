@@ -214,11 +214,4 @@ For adding dot env file
 For adding etherscan
 ### `npm install --save-dev @nomiclabs/hardhat-etherscan`
 
-PENDING 
-
-- remove greeter sample ( contract, UI, deploy etc...)
-- add to gihub
-- mention alchemy in bounty
-- deploy to spheron
-- price feed can be used.. min 100 USD
-- contract not verified
+Renamed Repo to arch911Dapp
