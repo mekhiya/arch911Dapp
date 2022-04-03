@@ -1,6 +1,6 @@
 import './App.css';
 import { ethers } from 'ethers';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Arch911 from "./artifacts/contracts/Arch911.sol/Arch911Contract.json"
 
 // kovan url
